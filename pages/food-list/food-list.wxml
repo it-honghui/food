@@ -1,0 +1,157 @@
+<view class="container" style="background: {{currentTheme.background}}">
+  <!-- 可爱装饰背景 -->
+  <view class="cute-bg">
+    <view class="floating-heart">💖</view>
+    <view class="floating-star">⭐</view>
+    <view class="floating-sparkle">✨</view>
+  </view>
+
+  <!-- 标题区域 -->
+  <view class="header">
+    <view class="title-container">
+      <view class="cute-icon">📋</view>
+      <view class="title">所有食物选项</view>
+      <view class="cute-icon">📋</view>
+    </view>
+    <view class="subtitle">小耳朵专属菜单</view>
+  </view>
+
+  <!-- 功能按钮区域 -->
+  <view class="action-buttons">
+    <button class="action-btn add-btn" bindtap="showAddModal" style="background: linear-gradient(45deg, {{currentTheme.primary}}, {{currentTheme.secondary}})">
+      <view class="btn-content">
+        <view class="btn-icon">➕</view>
+        <view class="btn-text">添加</view>
+      </view>
+    </button>
+    
+    <button class="action-btn reset-btn" bindtap="resetFoodList" style="background: linear-gradient(45deg, {{currentTheme.primary}}, {{currentTheme.secondary}})">
+      <view class="btn-content">
+        <view class="btn-icon">🔄</view>
+        <view class="btn-text">重置</view>
+      </view>
+    </button>
+  </view>
+
+  <!-- 搜索框 -->
+  <view class="search-container">
+    <view class="search-icon">🔍</view>
+    <input class="search-input" 
+           placeholder="搜索食物..." 
+           value="{{searchText}}"
+           bindinput="onSearchInput" />
+  </view>
+
+  <!-- 分类标签 -->
+  <view class="category-tabs">
+    <view class="tab {{currentCategory === 'all' ? 'active' : ''}}" 
+          bindtap="selectCategory" data-category="all">
+      全部
+    </view>
+    <view class="tab {{currentCategory === 'chinese' ? 'active' : ''}}" 
+          bindtap="selectCategory" data-category="chinese">
+      中餐
+    </view>
+    <view class="tab {{currentCategory === 'western' ? 'active' : ''}}" 
+          bindtap="selectCategory" data-category="western">
+      西餐
+    </view>
+    <view class="tab {{currentCategory === 'japanese' ? 'active' : ''}}" 
+          bindtap="selectCategory" data-category="japanese">
+      日料
+    </view>
+    <view class="tab {{currentCategory === 'dessert' ? 'active' : ''}}" 
+          bindtap="selectCategory" data-category="dessert">
+      甜点
+    </view>
+  </view>
+
+  <!-- 食物列表 -->
+  <scroll-view class="food-list" scroll-y="true">
+    <view class="food-grid">
+      <view class="food-item" 
+            wx:for="{{filteredFoodList}}" 
+            wx:key="index"
+            bindtap="selectFood"
+            data-food="{{item}}">
+        <view class="food-emoji">{{item.emoji}}</view>
+        <view class="food-name">{{item.name}}</view>
+        <view class="food-actions">
+          <view class="action-icon edit-icon" 
+                catchtap="editFood" 
+                data-index="{{index}}"
+                data-food="{{item}}">✏️</view>
+          <view class="action-icon delete-icon" 
+                catchtap="deleteFood" 
+                data-index="{{index}}"
+                data-food="{{item}}">🗑️</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 统计信息 -->
+  <view class="stats">
+    <text>共 {{filteredFoodList.length}} 个选项</text>
+  </view>
+
+  <!-- 添加食物弹窗 -->
+  <view class="modal-overlay" wx:if="{{showAddModal}}" bindtap="hideAddModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <view class="modal-title">添加新食物</view>
+        <view class="modal-close" bindtap="hideAddModal">✕</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="input-group">
+          <view class="input-label">食物名称</view>
+          <input class="modal-input" 
+                 placeholder="请输入食物名称" 
+                 value="{{newFoodName}}"
+                 bindinput="onNewFoodInput" />
+        </view>
+        
+        <view class="input-group">
+          <view class="input-label">选择分类</view>
+          <picker class="category-picker" 
+                  range="{{categoryOptions}}" 
+                  value="{{selectedCategoryIndex}}"
+                  bindchange="onCategoryChange">
+            <view class="picker-text">{{categoryOptions[selectedCategoryIndex]}}</view>
+          </picker>
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="hideAddModal">取消</button>
+        <button class="modal-btn confirm-btn" bindtap="addNewFood">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑食物弹窗 -->
+  <view class="modal-overlay" wx:if="{{showEditModal}}" bindtap="hideEditModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <view class="modal-title">编辑食物</view>
+        <view class="modal-close" bindtap="hideEditModal">✕</view>
+      </view>
+      
+      <view class="modal-body">
+        <view class="input-group">
+          <view class="input-label">食物名称</view>
+          <input class="modal-input" 
+                 placeholder="请输入食物名称" 
+                 value="{{editFoodName}}"
+                 bindinput="onEditFoodInput" />
+        </view>
+      </view>
+      
+      <view class="modal-footer">
+        <button class="modal-btn cancel-btn" bindtap="hideEditModal">取消</button>
+        <button class="modal-btn confirm-btn" bindtap="confirmEditFood">确定</button>
+      </view>
+    </view>
+  </view>
+</view> 
