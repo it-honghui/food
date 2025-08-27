@@ -15,16 +15,16 @@
       <view class="title">今天吃什么</view>
       <view class="cute-icon">🍰</view>
     </view>
-    <view class="subtitle">小耳朵专属</view>
+    <view class="subtitle">小公主专属</view>
     <view class="cute-decoration">🌸 让选择变得有趣 🌸</view>
   </view>
 
-  <!-- 小耳朵专属功能 -->
+  <!-- 小公主专属功能 -->
   <view class="cute-functions">
     <button class="cute-btn praise-btn" bindtap="praiseLittleEar" style="background: linear-gradient(45deg, {{currentTheme.primary}}, {{currentTheme.secondary}})">
       <view class="btn-content">
         <view class="btn-icon">💝</view>
-        <view class="btn-text">夸夸小耳朵</view>
+        <view class="btn-text">夸夸小公主</view>
       </view>
     </button>
     
@@ -115,7 +115,7 @@
   <view class="joke-modal" wx:if="{{showJokeModal}}" bindtap="hideJokeModal">
     <view class="joke-content" catchtap="stopPropagation" style="background: {{currentTheme.tertiary}}">
       <view class="joke-header">
-        <view class="joke-title">😄 小耳朵专属笑话</view>
+        <view class="joke-title">😄 小公主专属笑话</view>
         <view class="joke-close" bindtap="hideJokeModal">✕</view>
       </view>
       <view class="joke-text">{{currentJoke}}</view>

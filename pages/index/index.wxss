@@ -566,7 +566,7 @@
 .food-icon:nth-child(5) { animation-delay: 2s; }
 .food-icon:nth-child(6) { animation-delay: 2.5s; } 
 
-/* 小耳朵专属功能 */
+/* 小公主专属功能 */
 .cute-functions {
   display: flex;
   gap: 20rpx;
